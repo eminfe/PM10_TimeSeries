@@ -1,0 +1,44 @@
+# -*- coding: utf-8 -*-
+"""
+Spyder Editor
+
+This is a temporary script file.
+"""
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt # plotting
+import datetime
+import os
+import glob
+
+path = r'C:/Users/Asus/Desktop/semester 2/scientific programming/2019'
+files = glob.glob(path + "/*.csv")
+print(files)
+
+fig_name = '{}{}'.format(files, ".pdf")
+Title = "PM10 Concentration at {}".format(files)
+count=0
+
+for file_path in files:
+    df = pd.read_csv(file_path, sep=';', index_col=2, parse_dates=True)
+    df.head()
+    df[3:]
+    df.replace(-999, np.nan, inplace=True)
+
+    df.plot(y=['model_value', 'monitoring_value'], figsize=(12, 3), title='PM10 Concentration')
+
+    plt.savefig(file_path + ".pdf")
+    
+
+fig_name = '{}{}'.format(files, ".png")
+Title = "PM10 Concentration monitoring at {}".format(files)
+count=0
+for file_path in files:
+    df = pd.read_csv(file_path, sep=';', index_col=2, parse_dates=True)
+    df.head()
+    df[3:]
+    df.replace(-999, np.nan, inplace=True)
+    df.plot = df.plot.hexbin(x='model_value', y='monitoring_value', gridsize=120, figsize=(12, 12))
+    plt.savefig(file_path + ".png")
+    
+    
